@@ -1,35 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [currentPage, setCurrentPage] = useState<'login' | 'register'>('login');
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  // Simples sistema de navegação entre páginas
+  // No futuro, substituir por React Router
+  const handleNavigation = (page: 'login' | 'register') => {
+    setCurrentPage(page);
+  };
+
+  // Clonando os componentes e passando função de navegação via props seria ideal,
+  // mas por ora vamos interceptar os cliques nos links
+  const renderPage = () => {
+    if (currentPage === 'register') {
+      return <Register />;
+    }
+    return <Login />;
+  };
+
+  // Adicionar event listener para interceptar cliques nos links
+  const handleClick = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'A') {
+      const text = target.textContent;
+      if (text === 'Criar conta') {
+        e.preventDefault();
+        handleNavigation('register');
+      } else if (text === 'Fazer login') {
+        e.preventDefault();
+        handleNavigation('login');
+      }
+    }
+  };
+
+  return <div onClick={handleClick}>{renderPage()}</div>;
 }
 
-export default App
+export default App;
