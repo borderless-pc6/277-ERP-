@@ -1,41 +1,40 @@
 import { useState } from 'react';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import type { PageType } from './types';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<'login' | 'register'>('login');
+  const [currentPage, setCurrentPage] = useState<PageType>('login');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Simples sistema de navegação entre páginas
-  // No futuro, substituir por React Router
-  const handleNavigation = (page: 'login' | 'register') => {
+  const handleNavigation = (page: PageType) => {
     setCurrentPage(page);
   };
 
-  // Clonando os componentes e passando função de navegação via props seria ideal,
-  // mas por ora vamos interceptar os cliques nos links
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+    setCurrentPage('dashboard');
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setCurrentPage('login');
+  };
+
   const renderPage = () => {
+    if (isAuthenticated && currentPage === 'dashboard') {
+      return <Dashboard onLogout={handleLogout} />;
+    }
+
     if (currentPage === 'register') {
-      return <Register />;
+      return <Register onNavigate={handleNavigation} />;
     }
-    return <Login />;
+
+    return <Login onNavigate={handleNavigation} onLogin={handleLogin} />;
   };
 
-  // Adicionar event listener para interceptar cliques nos links
-  const handleClick = (e: React.MouseEvent) => {
-    const target = e.target as HTMLElement;
-    if (target.tagName === 'A') {
-      const text = target.textContent;
-      if (text === 'Criar conta') {
-        e.preventDefault();
-        handleNavigation('register');
-      } else if (text === 'Fazer login') {
-        e.preventDefault();
-        handleNavigation('login');
-      }
-    }
-  };
-
-  return <div onClick={handleClick}>{renderPage()}</div>;
+  return <>{renderPage()}</>;
 }
 
 export default App;

@@ -1,145 +1,145 @@
 import { useState } from 'react';
 import './Register.css';
 
-const Register = () => {
-    const [fullName, setFullName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+interface RegisterProps {
+  onNavigate: (page: 'login' | 'register' | 'dashboard') => void;
+}
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+const Register = ({ onNavigate }: RegisterProps) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-        if (password !== confirmPassword) {
-            alert('As senhas não coincidem!');
-            return;
-        }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (password !== confirmPassword) {
+      alert('As senhas não coincidem!');
+      return;
+    }
+    
+    console.log('Register:', { name, email, password });
+    onNavigate('login');
+  };
 
-        console.log('Registro:', { fullName, email, password });
-        // Aqui você implementará a lógica de registro
-    };
-
-    return (
-        <div className="register-container">
-            <div className="register-card">
-                <div className="register-header">
-                    <div className="admin-logo">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2L4 6V11C4 16.55 7.84 21.74 13 23C18.16 21.74 22 16.55 22 11V6L12 2ZM12 11.99H20C19.47 16.11 16.72 19.78 13 20.93V12H4V7.3L12 3.69V11.99Z" fill="white" />
-                        </svg>
-                    </div>
-                    <h1 className="admin-title">Admin</h1>
-                </div>
-
-                <div className="register-content">
-                    <h2 className="register-title">Criar conta</h2>
-                    <p className="register-subtitle">
-                        Preencha os dados abaixo para criar sua conta administrativa
-                    </p>
-
-                    <form onSubmit={handleSubmit} className="register-form">
-                        <div className="form-group">
-                            <label htmlFor="fullName" className="form-label">Nome completo</label>
-                            <div className="input-wrapper">
-                                <svg className="input-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M10 10C12.0711 10 13.75 8.32107 13.75 6.25C13.75 4.17893 12.0711 2.5 10 2.5C7.92893 2.5 6.25 4.17893 6.25 6.25C6.25 8.32107 7.92893 10 10 10Z" stroke="#666" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                    <path d="M17.5 17.5C17.5 14.7386 14.1421 12.5 10 12.5C5.85786 12.5 2.5 14.7386 2.5 17.5" stroke="#666" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <input
-                                    type="text"
-                                    id="fullName"
-                                    value={fullName}
-                                    onChange={(e) => setFullName(e.target.value)}
-                                    placeholder="João Silva"
-                                    className="form-input"
-                                    required
-                                />
-                            </div>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="email" className="form-label">Email</label>
-                            <div className="input-wrapper">
-                                <svg className="input-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M3.33334 3.33334H16.6667C17.5833 3.33334 18.3333 4.08334 18.3333 5.00001V15C18.3333 15.9167 17.5833 16.6667 16.6667 16.6667H3.33334C2.41668 16.6667 1.66668 15.9167 1.66668 15V5.00001C1.66668 4.08334 2.41668 3.33334 3.33334 3.33334Z" stroke="#666" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                    <path d="M18.3333 5L10 10.8333L1.66666 5" stroke="#666" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="admin@exemplo.com"
-                                    className="form-input"
-                                    required
-                                />
-                            </div>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="password" className="form-label">Senha</label>
-                            <div className="input-wrapper">
-                                <svg className="input-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M15.8333 9.16667H4.16667C3.24619 9.16667 2.5 9.91286 2.5 10.8333V16.6667C2.5 17.5871 3.24619 18.3333 4.16667 18.3333H15.8333C16.7538 18.3333 17.5 17.5871 17.5 16.6667V10.8333C17.5 9.91286 16.7538 9.16667 15.8333 9.16667Z" stroke="#666" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                    <path d="M5.83334 9.16667V5.83334C5.83334 4.72827 6.27233 3.66846 7.05373 2.88706C7.83513 2.10566 8.89494 1.66667 10 1.66667C11.1051 1.66667 12.1649 2.10566 12.9463 2.88706C13.7277 3.66846 14.1667 4.72827 14.1667 5.83334V9.16667" stroke="#666" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <input
-                                    type="password"
-                                    id="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    placeholder="••••••"
-                                    className="form-input"
-                                    required
-                                    minLength={6}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="confirmPassword" className="form-label">Confirmar senha</label>
-                            <div className="input-wrapper">
-                                <svg className="input-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M15.8333 9.16667H4.16667C3.24619 9.16667 2.5 9.91286 2.5 10.8333V16.6667C2.5 17.5871 3.24619 18.3333 4.16667 18.3333H15.8333C16.7538 18.3333 17.5 17.5871 17.5 16.6667V10.8333C17.5 9.91286 16.7538 9.16667 15.8333 9.16667Z" stroke="#666" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                    <path d="M5.83334 9.16667V5.83334C5.83334 4.72827 6.27233 3.66846 7.05373 2.88706C7.83513 2.10566 8.89494 1.66667 10 1.66667C11.1051 1.66667 12.1649 2.10566 12.9463 2.88706C13.7277 3.66846 14.1667 4.72827 14.1667 5.83334V9.16667" stroke="#666" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <input
-                                    type="password"
-                                    id="confirmPassword"
-                                    value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                    placeholder="••••••"
-                                    className="form-input"
-                                    required
-                                    minLength={6}
-                                />
-                            </div>
-                        </div>
-
-                        <button type="submit" className="submit-button">
-                            Criar conta
-                        </button>
-
-                        <div className="divider">
-                            <span>OU</span>
-                        </div>
-
-                        <p className="login-text">
-                            Já tem uma conta? <a href="#" className="login-link">Fazer login</a>
-                        </p>
-                    </form>
-                </div>
-
-                <div className="register-footer">
-                    <p>
-                        Ao criar uma conta, você concorda com nossos{' '}
-                        <a href="#" className="footer-link">Termos de Serviço</a> e{' '}
-                        <a href="#" className="footer-link">Política de Privacidade</a>
-                    </p>
-                </div>
-            </div>
+  return (
+    <div className="auth-container">
+      <div className="auth-card">
+        <div className="auth-logo">
+          <div className="logo-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L4 6V11C4 16.55 7.84 21.74 13 23C18.16 21.74 22 16.55 22 11V6L12 2Z" fill="currentColor" />
+            </svg>
+          </div>
+          <h1>Admin</h1>
         </div>
-    );
+
+        <div className="auth-content">
+          <h2 className="auth-title">Criar conta</h2>
+          <p className="auth-subtitle">
+            Preencha os dados abaixo para criar sua conta administrativa
+          </p>
+
+          <form onSubmit={handleSubmit} className="auth-form">
+            <div className="form-group">
+              <label htmlFor="name">Nome completo</label>
+              <div className="input-wrapper">
+                <svg className="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <input
+                  type="text"
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="João Silva"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <div className="input-wrapper">
+                <svg className="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M3 8L10.89 13.26C11.2187 13.4793 11.6049 13.5963 12 13.5963C12.3951 13.5963 12.7813 13.4793 13.11 13.26L21 8M5 19H19C19.5304 19 20.0391 18.7893 20.4142 18.4142C20.7893 18.0391 21 17.5304 21 17V7C21 6.46957 20.7893 5.96086 20.4142 5.58579C20.0391 5.21071 19.5304 5 19 5H5C4.46957 5 3.96086 5.21071 3.58579 5.58579C3.21071 5.96086 3 6.46957 3 7V17C3 17.5304 3.21071 18.0391 3.58579 18.4142C3.96086 18.7893 4.46957 19 5 19Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="admin@exemplo.com"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="password">Senha</label>
+              <div className="input-wrapper">
+                <svg className="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M19 11H5C3.89543 11 3 11.8954 3 13V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V13C21 11.8954 20.1046 11 19 11Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M7 11V7C7 5.67392 7.52678 4.40215 8.46447 3.46447C9.40215 2.52678 10.6739 2 12 2C13.3261 2 14.5979 2.52678 15.5355 3.46447C16.4732 4.40215 17 5.67392 17 7V11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="confirmPassword">Confirmar senha</label>
+              <div className="input-wrapper">
+                <svg className="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M19 11H5C3.89543 11 3 11.8954 3 13V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V13C21 11.8954 20.1046 11 19 11Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M7 11V7C7 5.67392 7.52678 4.40215 8.46447 3.46447C9.40215 2.52678 10.6739 2 12 2C13.3261 2 14.5979 2.52678 15.5355 3.46447C16.4732 4.40215 17 5.67392 17 7V11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                />
+              </div>
+            </div>
+
+            <button type="submit" className="auth-button">
+              Criar conta
+            </button>
+
+            <div className="auth-divider">
+              <span>OU</span>
+            </div>
+
+            <p className="auth-switch">
+              Já tem uma conta?{' '}
+              <button type="button" onClick={() => onNavigate('login')} className="link-button">
+                Fazer login
+              </button>
+            </p>
+          </form>
+        </div>
+
+        <div className="auth-footer">
+          <p>
+            Ao criar uma conta, você concorda com nossos{' '}
+            <a href="#">Termos de Serviço</a> e{' '}
+            <a href="#">Política de Privacidade</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Register;
