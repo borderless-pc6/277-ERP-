@@ -13,5 +13,5 @@ export interface AuthContextType {
   logout: () => void;
 }
 
-export type PageType = 'login' | 'register' | 'dashboard';
+export type PageType = 'login' | 'register' | 'dashboard' | 'analytics';
 

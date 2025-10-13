@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import Analytics from './pages/Analytics';
 import type { PageType } from './types';
 
 function App() {
@@ -24,7 +25,11 @@ function App() {
 
   const renderPage = () => {
     if (isAuthenticated && currentPage === 'dashboard') {
-      return <Dashboard onLogout={handleLogout} />;
+      return <Dashboard onLogout={handleLogout} onNavigate={handleNavigation} />;
+    }
+
+    if (isAuthenticated && currentPage === 'analytics') {
+      return <Analytics onLogout={handleLogout} onNavigate={handleNavigation} />;
     }
 
     if (currentPage === 'register') {
