@@ -2,7 +2,10 @@ export interface User {
   id: string;
   name: string;
   email: string;
+  phone: string;
   createdAt: Date;
+  status: 'active' | 'inactive';
+  role: 'admin' | 'editor' | 'viewer';
 }
 
 export interface AuthContextType {
@@ -13,5 +16,5 @@ export interface AuthContextType {
   logout: () => void;
 }
 
-export type PageType = 'login' | 'register' | 'dashboard' | 'analytics';
+export type PageType = 'login' | 'register' | 'dashboard' | 'analytics' | 'users';
 
