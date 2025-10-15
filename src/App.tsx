@@ -4,6 +4,8 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Analytics from './pages/Analytics';
 import Users from './pages/Users';
+import AtosAdministrativos from './pages/AtosAdministrativos';
+import Configuracoes from './pages/Configuracoes';
 import type { PageType } from './types';
 
 function App() {
@@ -35,6 +37,14 @@ function App() {
 
     if (isAuthenticated && currentPage === 'users') {
       return <Users onLogout={handleLogout} onNavigate={handleNavigation} />;
+    }
+
+    if (isAuthenticated && currentPage === 'atos-administrativos') {
+      return <AtosAdministrativos onLogout={handleLogout} onNavigate={handleNavigation} />;
+    }
+
+    if (isAuthenticated && currentPage === 'configuracoes') {
+      return <Configuracoes onLogout={handleLogout} onNavigate={handleNavigation} />;
     }
 
     if (currentPage === 'register') {
