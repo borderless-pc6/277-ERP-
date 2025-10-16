@@ -14,6 +14,7 @@
   border-radius: 16px;
   overflow: hidden;
   box-shadow: var(--shadow-lg);
+  animation: scaleIn 0.5s ease-out;
 }
 
 .auth-logo {
@@ -95,7 +96,7 @@
 }
 
 .forgot-link:hover {
-  color: var(--primary-light);
+  color: var(--primary-hover);
 }
 
 .input-wrapper {
@@ -139,12 +140,13 @@
   font-weight: 600;
   border-radius: 8px;
   margin-top: 8px;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
+  transition: var(--transition);
 }
 
 .auth-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 6px 16px rgba(30, 58, 138, 0.4);
 }
 
 .auth-button:active {
@@ -187,7 +189,7 @@
 }
 
 .link-button:hover {
-  color: var(--primary-light);
+  color: var(--primary-hover);
 }
 
 .auth-footer {
@@ -210,7 +212,7 @@
 }
 
 .auth-footer a:hover {
-  color: var(--primary-light);
+  color: var(--primary-hover);
 }
 
 /* Responsivo */

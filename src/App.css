@@ -1,2 +1,45 @@
-/* App-specific styles if needed */
-/* Global styles are in index.css */
+/* ========== CONTAINER PRINCIPAL ========== */
+.app-container {
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* ========== TRANSIÇÕES DE PÁGINA ========== */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease-in, transform 0.3s ease-in;
+}
+
+/* ========== ANIMAÇÕES DE ENTRADA DE PÁGINA ========== */
+.page-enter {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.page-auth {
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* ========== RESPONSIVO ========== */
+@media (max-width: 768px) {
+  .page-transition-enter-active,
+  .page-transition-exit-active {
+    transition-duration: 0.3s;
+  }
+}

@@ -5,8 +5,10 @@ import Dashboard from './pages/Dashboard';
 import Analytics from './pages/Analytics';
 import Users from './pages/Users';
 import AtosAdministrativos from './pages/AtosAdministrativos';
+import AprovacaoAtos from './pages/AprovacaoAtos';
 import Configuracoes from './pages/Configuracoes';
 import type { PageType } from './types';
+import './App.css';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<PageType>('login');
@@ -43,6 +45,10 @@ function App() {
       return <AtosAdministrativos onLogout={handleLogout} onNavigate={handleNavigation} />;
     }
 
+    if (isAuthenticated && currentPage === 'aprovacao-atos') {
+      return <AprovacaoAtos onLogout={handleLogout} onNavigate={handleNavigation} />;
+    }
+
     if (isAuthenticated && currentPage === 'configuracoes') {
       return <Configuracoes onLogout={handleLogout} onNavigate={handleNavigation} />;
     }
@@ -54,7 +60,11 @@ function App() {
     return <Login onNavigate={handleNavigation} onLogin={handleLogin} />;
   };
 
-  return <>{renderPage()}</>;
+  return (
+    <div className="app-container animate-fade-in">
+      {renderPage()}
+    </div>
+  );
 }
 
 export default App;

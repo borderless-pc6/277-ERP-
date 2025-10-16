@@ -11,12 +11,13 @@
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  transition: width 0.3s ease;
+  transition: width 0.3s ease, transform 0.3s ease;
   position: fixed;
   left: 0;
   top: 0;
   height: 100vh;
   z-index: 100;
+  animation: slideInLeft 0.5s ease-out;
 }
 
 .sidebar.collapsed {
@@ -217,12 +218,23 @@
   display: flex;
   gap: 16px;
   transition: var(--transition);
+  animation: fadeInUp 0.6s ease-out;
 }
 
-.stat-card:hover {
-  border-color: var(--primary);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+.stat-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.stat-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.stat-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.stat-card:nth-child(4) {
+  animation-delay: 0.4s;
 }
 
 .stat-icon {

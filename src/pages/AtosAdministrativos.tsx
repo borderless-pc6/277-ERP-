@@ -126,6 +126,20 @@ const AtosAdministrativos = ({ onLogout, onNavigate }: AtosAdministrativosProps)
 
                     <button
                         className="nav-item"
+                        title="Aprovação de Atos"
+                        onClick={() => onNavigate?.('aprovacao-atos')}
+                    >
+                        <div className="nav-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                <path d="M9 12L11 14L15 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
+                            </svg>
+                        </div>
+                        {!sidebarCollapsed && <span className="nav-text">Aprovação de Atos</span>}
+                    </button>
+
+                    <button
+                        className="nav-item"
                         title="Configurações"
                         onClick={() => onNavigate?.('configuracoes')}
                     >
