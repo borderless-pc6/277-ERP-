@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './AtosAdministrativos.css';
+import { useNotifications } from '../context/NotificationContext';
 import type { PageType } from '../types';
 
 interface AtosAdministrativosProps {
@@ -8,6 +9,7 @@ interface AtosAdministrativosProps {
 }
 
 const AtosAdministrativos = ({ onLogout, onNavigate }: AtosAdministrativosProps) => {
+    const { success } = useNotifications();
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
     const [formData, setFormData] = useState({
         tipo: 'Conselho Administrativo',
@@ -37,7 +39,7 @@ const AtosAdministrativos = ({ onLogout, onNavigate }: AtosAdministrativosProps)
         e.preventDefault();
         console.log('Dados do formulário:', formData);
         // Aqui você pode implementar a lógica de envio
-        alert('Atos administrativos cadastrado com sucesso!');
+        success('Atos Cadastrado', 'Atos administrativo cadastrado com sucesso!');
     };
 
     const handleClear = () => {

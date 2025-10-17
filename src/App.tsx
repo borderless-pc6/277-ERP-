@@ -7,6 +7,7 @@ import Users from './pages/Users';
 import AtosAdministrativos from './pages/AtosAdministrativos';
 import AprovacaoAtos from './pages/AprovacaoAtos';
 import Configuracoes from './pages/Configuracoes';
+import { NotificationProvider } from './context/NotificationContext';
 import type { PageType } from './types';
 import './App.css';
 
@@ -61,9 +62,11 @@ function App() {
   };
 
   return (
-    <div className="app-container animate-fade-in">
-      {renderPage()}
-    </div>
+    <NotificationProvider>
+      <div className="app-container animate-fade-in">
+        {renderPage()}
+      </div>
+    </NotificationProvider>
   );
 }
 

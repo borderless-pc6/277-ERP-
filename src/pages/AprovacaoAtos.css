@@ -579,3 +579,91 @@
     font-size: 16px;
   }
 }
+
+/* ========== MODAL DE RECUSA ========== */
+.reject-info {
+  padding: 20px 0;
+}
+
+.reject-info h3 {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.ato-details {
+  background-color: var(--background-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.ato-details p {
+  margin: 8px 0;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.ato-details strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.reason-section {
+  margin-top: 20px;
+}
+
+.reason-label {
+  display: block;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.required {
+  color: #ef4444;
+}
+
+.reason-textarea {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--background-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 100px;
+  transition: var(--transition);
+}
+
+.reason-textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.reason-textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.error-message {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}

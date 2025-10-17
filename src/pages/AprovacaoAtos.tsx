@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './AprovacaoAtos.css';
+import { useNotifications } from '../context/NotificationContext';
 import type { PageType } from '../types';
 
 interface AprovacaoAtosProps {
@@ -19,11 +20,15 @@ interface AtoAdministrativo {
 }
 
 const AprovacaoAtos = ({ onLogout, onNavigate }: AprovacaoAtosProps) => {
+    const { success, error } = useNotifications();
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState<'todos' | 'pendente' | 'aprovado' | 'reprovado'>('todos');
     const [selectedAto, setSelectedAto] = useState<AtoAdministrativo | null>(null);
     const [showModal, setShowModal] = useState(false);
+    const [showRejectModal, setShowRejectModal] = useState(false);
+    const [rejectReason, setRejectReason] = useState('');
+    const [atoToReject, setAtoToReject] = useState<AtoAdministrativo | null>(null);
 
     // Dados mockados para demonstração
     const [atosData, setAtosData] = useState<AtoAdministrativo[]>([
@@ -87,12 +92,30 @@ const AprovacaoAtos = ({ onLogout, onNavigate }: AprovacaoAtosProps) => {
         setAtosData(prev => prev.map(ato =>
             ato.id === id ? { ...ato, status: 'aprovado' as const } : ato
         ));
+        success('Atos Aprovado', 'O atos administrativo foi aprovado com sucesso!');
     };
 
-    const handleReprovar = (id: string) => {
-        setAtosData(prev => prev.map(ato =>
-            ato.id === id ? { ...ato, status: 'reprovado' as const } : ato
-        ));
+    const handleReprovar = (ato: AtoAdministrativo) => {
+        setAtoToReject(ato);
+        setShowRejectModal(true);
+    };
+
+    const confirmReject = () => {
+        if (atoToReject && rejectReason.trim()) {
+            setAtosData(prev => prev.map(ato =>
+                ato.id === atoToReject.id ? { ...ato, status: 'reprovado' as const } : ato
+            ));
+            setShowRejectModal(false);
+            setRejectReason('');
+            setAtoToReject(null);
+            error('Atos Reprovado', `O atos administrativo foi reprovado.\nMotivo: ${rejectReason}`);
+        }
+    };
+
+    const cancelReject = () => {
+        setShowRejectModal(false);
+        setRejectReason('');
+        setAtoToReject(null);
     };
 
     const handleVerArquivo = (ato: AtoAdministrativo) => {
@@ -360,7 +383,7 @@ const AprovacaoAtos = ({ onLogout, onNavigate }: AprovacaoAtosProps) => {
                                                     </button>
                                                     <button
                                                         className="action-btn reject-btn"
-                                                        onClick={() => handleReprovar(ato.id)}
+                                                        onClick={() => handleReprovar(ato)}
                                                         title="Reprovar"
                                                     >
                                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -445,8 +468,8 @@ const AprovacaoAtos = ({ onLogout, onNavigate }: AprovacaoAtosProps) => {
                                     <button
                                         className="btn btn-danger"
                                         onClick={() => {
-                                            handleReprovar(selectedAto.id);
                                             closeModal();
+                                            handleReprovar(selectedAto);
                                         }}
                                     >
                                         Reprovar
@@ -462,6 +485,62 @@ const AprovacaoAtos = ({ onLogout, onNavigate }: AprovacaoAtosProps) => {
                                     </button>
                                 </>
                             )}
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal de Recusa */}
+            {showRejectModal && atoToReject && (
+                <div className="modal-overlay" onClick={cancelReject}>
+                    <div className="modal" onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h2 className="modal-title">Recusar Atos Administrativo</h2>
+                            <button className="modal-close" onClick={cancelReject}>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="reject-info">
+                                <h3>Você está prestes a recusar o seguinte atos:</h3>
+                                <div className="ato-details">
+                                    <p><strong>Prefeitura:</strong> {atoToReject.prefeitura}</p>
+                                    <p><strong>Tipo:</strong> {atoToReject.tipo}</p>
+                                    <p><strong>Descrição:</strong> {atoToReject.descricao}</p>
+                                    <p><strong>Mês/Ano:</strong> {atoToReject.mesAno}</p>
+                                </div>
+                                <div className="reason-section">
+                                    <label htmlFor="reject-reason" className="reason-label">
+                                        Motivo da recusa <span className="required">*</span>
+                                    </label>
+                                    <textarea
+                                        id="reject-reason"
+                                        className="reason-textarea"
+                                        value={rejectReason}
+                                        onChange={(e) => setRejectReason(e.target.value)}
+                                        placeholder="Digite o motivo pelo qual este atos está sendo recusado..."
+                                        rows={4}
+                                        required
+                                    />
+                                    {!rejectReason.trim() && (
+                                        <p className="error-message">Por favor, informe o motivo da recusa.</p>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button className="btn btn-secondary" onClick={cancelReject}>
+                                Cancelar
+                            </button>
+                            <button
+                                className="btn btn-danger"
+                                onClick={confirmReject}
+                                disabled={!rejectReason.trim()}
+                            >
+                                Confirmar Recusa
+                            </button>
                         </div>
                     </div>
                 </div>
