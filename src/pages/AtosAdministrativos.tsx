@@ -21,7 +21,7 @@ const AtosAdministrativos = ({ onLogout, onNavigate }: AtosAdministrativosProps)
         setSidebarCollapsed(!sidebarCollapsed);
     };
 
-    const handleInputChange = (field: string, value: string | File) => {
+    const handleInputChange = (field: string, value: string | File | null) => {
         setFormData(prev => ({
             ...prev,
             [field]: value
